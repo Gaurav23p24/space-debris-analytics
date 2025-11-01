@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Debris Visualization Suite - Project 3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1d3a 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(0, 150, 255, 0.1) 0%, rgba(255, 100, 255, 0.1) 100%);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00bcd4 0%, #ff6ec7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            color: #a0a8d0;
+            margin-bottom: 20px;
+        }
+        
+        .meta {
+            font-size: 0.9em;
+            color: #8892b0;
+        }
+        
+        .intro {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border-left: 4px solid #00bcd4;
+        }
+        
+        .intro h2 {
+            color: #00bcd4;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .intro p {
+            margin-bottom: 10px;
+            color: #d0d5e8;
+        }
+        
+        .visualization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .viz-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+        
+        .viz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 188, 212, 0.3);
+            border-color: rgba(0, 188, 212, 0.5);
+        }
+        
+        .viz-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #00bcd4 0%, #ff6ec7 100%);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .viz-card h3 {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #fff;
+            font-size: 1.3em;
+        }
+        
+        .viz-card p {
+            color: #b0b8d0;
+            margin-bottom: 8px;
+        }
+        
+        .insight {
+            background: rgba(0, 188, 212, 0.1);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            color: #00d4ff;
+            margin-top: 10px;
+        }
+        
+        .iframe-container {
+            margin-top: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .iframe-container iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+            display: block;
+        }
+        
+        .iframe-header {
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.2) 0%, rgba(255, 100, 200, 0.2) 100%);
+            padding: 15px 20px;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .nav-link {
+            background: rgba(0, 188, 212, 0.15);
+            color: #00d4ff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+        
+        .nav-link:hover {
+            background: rgba(0, 188, 212, 0.3);
+            transform: scale(1.05);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #8892b0;
+        }
+        
+        .notice {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .notice h3 {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+        
+        .notice p {
+            color: #ffe082;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .visualization-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .iframe-container iframe {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌌 Our Stuff In Space</h1>
+            <p class="subtitle">A Visual Exploration of Earth's Orbital Debris</p>
+            <div class="meta">
+                <strong>Visual Analytics 5122 | Project 3</strong><br>
+                Gaurav Bharatkumar Patel | 801426641
+            </div>
+        </header>
+        
+        <div class="intro">
+            <h2>📊 About This Visualization Suite</h2>
+            <p>This project transforms 65,000+ space objects into a compelling narrative about humanity's expanding footprint in Earth's orbit. Through seven interactive visualizations, we explore the accumulation, distribution, and implications of space debris from 1957 to present day.</p>
+            <p><strong>Design Philosophy:</strong> From wonder → concern, using intentional color choices, clear storytelling, and emotional engagement to make the invisible crisis visible.</p>
+            <div class="nav-links">
+                <a href="README_Project3.md" class="nav-link">📖 README</a>
+                <a href="Project3_DesignReport_GauravPatel.md" class="nav-link">📝 Design Report</a>
+                <a href="https://github.com/Gaurav23p24/space-debris-analytics" class="nav-link">💻 GitHub Repo</a>
+            </div>
+        </div>
+        
+        <div class="notice">
+            <h3>⚠️ HTML Files Required</h3>
+            <p>To see the interactive visualizations, you need to generate the HTML files by running the notebook in Google Colab. Once generated, upload them to this repository. See instructions below.</p>
+        </div>
+        
+        <div class="visualization-grid">
+            <!-- V1 -->
+            <div class="viz-card" onclick="loadViz('growth_timeline.html', 'Growth Timeline')">
+                <div class="viz-number">1</div>
+                <h3>Growth Timeline</h3>
+                <p><strong>Purpose:</strong> Historical accumulation</p>
+                <div class="insight">💡 From 1 satellite (1957) to 30,000+ objects today</div>
+            </div>
+            
+            <!-- V2 -->
+            <div class="viz-card" onclick="loadViz('regime_dominance.html', 'Orbit Regime Dominance')">
+                <div class="viz-number">2</div>
+                <h3>Orbit Regime Dominance</h3>
+                <p><strong>Purpose:</strong> Ownership by altitude</p>
+                <div class="insight">💡 CIS/US/China control different orbital zones</div>
+            </div>
+            
+            <!-- V3 -->
+            <div class="viz-card" onclick="loadViz('launches_decays_timeline.html', 'Launches vs Decays')">
+                <div class="viz-number">3</div>
+                <h3>Launches vs Decays</h3>
+                <p><strong>Purpose:</strong> Ecosystem balance</p>
+                <div class="insight">💡 We're adding objects faster than they decay</div>
+            </div>
+            
+            <!-- V4 -->
+            <div class="viz-card" onclick="loadViz('orbit_3d_visualization_fixed.html', '3D Orbital Distribution')">
+                <div class="viz-number">4</div>
+                <h3>3D Orbital Distribution</h3>
+                <p><strong>Purpose:</strong> Spatial reality</p>
+                <div class="insight">⭐ Featured - Interactive 3D view of Earth's orbital shell</div>
+            </div>
+            
+            <!-- V5 -->
+            <div class="viz-card" onclick="loadViz('public_private_stacked_bar.html', 'Public vs Private')">
+                <div class="viz-number">5</div>
+                <h3>Public vs Private</h3>
+                <p><strong>Purpose:</strong> Sector analysis</p>
+                <div class="insight">💡 Growing private sector footprint across regimes</div>
+            </div>
+            
+            <!-- V6 -->
+            <div class="viz-card" onclick="loadViz('orbit_altitude_pyramid.html', 'Altitude Pyramid')">
+                <div class="viz-number">6</div>
+                <h3>Altitude Pyramid</h3>
+                <p><strong>Purpose:</strong> Population structure</p>
+                <div class="insight">💡 Active vs decayed by altitude band</div>
+            </div>
+            
+            <!-- V7 -->
+            <div class="viz-card" onclick="loadViz('perigee_apogee_eccentricity.html', 'Eccentricity Map')">
+                <div class="viz-number">7</div>
+                <h3>Eccentricity Map</h3>
+                <p><strong>Purpose:</strong> Orbital shapes</p>
+                <div class="insight">💡 Perigee vs apogee reveals orbital diversity</div>
+            </div>
+        </div>
+        
+        <div id="viz-display" style="display: none;">
+            <div class="iframe-container">
+                <div class="iframe-header" id="viz-title">Loading...</div>
+                <iframe id="viz-frame" src=""></iframe>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🌍 Making the invisible crisis visible through data visualization</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Visual Analytics 5122 | Design, Storytelling, and Communication Mastery</p>
+            <p style="margin-top: 10px; font-size: 0.8em; color: #667;">© 2025 Gaurav Bharatkumar Patel</p>
+        </footer>
+    </div>
+    
+    <script>
+        function loadViz(filename, title) {
+            const display = document.getElementById('viz-display');
+            const frame = document.getElementById('viz-frame');
+            const titleEl = document.getElementById('viz-title');
+            
+            // Try loading from root first, then from content/ folder
+            const paths = [filename, `content/${filename}`];
+            let loaded = false;
+            
+            titleEl.textContent = title;
+            frame.style.display = 'none';
+            frame.onload = function() {
+                if (frame.contentWindow.length > 0) {
+                    // File exists
+                    frame.style.display = 'block';
+                    display.style.display = 'block';
+                    // Scroll to visualization
+                    display.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    loaded = true;
+                }
+            };
+            
+            frame.onerror = function() {
+                if (!loaded) {
+                    // Try next path or show error
+                    console.log('File not found:', filename);
+                    alert('Visualization file not found. Please generate HTML files by running the notebook in Google Colab.');
+                }
+            };
+            
+            // Try first path
+            frame.src = paths[0];
+            
+            // Fallback: show error message
+            setTimeout(() => {
+                if (!loaded) {
+                    alert('Visualization file not found. Please upload the generated HTML files to the repository.');
+                }
+            }, 2000);
+        }
+        
+        // Check if we're on GitHub Pages and adjust paths
+        if (window.location.hostname.includes('github.io')) {
+            // On GitHub Pages, files are at root
+            console.log('Running on GitHub Pages');
+        }
+    </script>
+</body>
+</html>
+

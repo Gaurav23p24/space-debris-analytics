@@ -28,7 +28,7 @@ ENV/
 # *.csv
 # data/
 
-# Generated content
-content/
-*.html
+# Generated content (allow index.html and visualization HTML files)
+# *.html - commented out to allow tracking visualization HTML files
+# content/ - commented out to allow tracking visualization files
 
