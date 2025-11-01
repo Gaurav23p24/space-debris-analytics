@@ -13,35 +13,47 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #f5f5f5;
-            color: #333;
+            background-image: url('assets/space-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #0a0a0a;
+            color: #fff;
             line-height: 1.6;
-            padding: 20px;
+            padding: 0;
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 40px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
         header {
             text-align: center;
             padding: 40px 20px;
             margin-bottom: 40px;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 2px solid #ddd;
         }
         
         h1 {
-            font-size: 2em;
+            font-size: 2.5em;
             margin-bottom: 10px;
             color: #1a1a1a;
-            font-weight: 600;
+            font-weight: 700;
         }
         
         .subtitle {
-            font-size: 1em;
+            font-size: 1.1em;
             color: #666;
             margin-bottom: 15px;
+            font-weight: 500;
         }
         
         .meta {
@@ -49,21 +61,44 @@
             color: #888;
         }
         
+        .intro-section {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 4px solid #4a90e2;
+        }
+        
+        .intro-section h2 {
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .intro-section p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
         .viz-section {
             margin-bottom: 60px;
         }
         
         .viz-title {
-            font-size: 1.3em;
+            font-size: 1.5em;
             font-weight: 600;
             margin-bottom: 10px;
             color: #1a1a1a;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
         }
         
         .viz-description {
             color: #666;
             margin-bottom: 20px;
-            font-size: 0.95em;
+            font-size: 1em;
+            line-height: 1.8;
         }
         
         .viz-container {
@@ -71,7 +106,7 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         .viz-container iframe {
@@ -85,14 +120,19 @@
             text-align: center;
             padding: 40px 20px;
             margin-top: 60px;
-            border-top: 1px solid #ddd;
+            border-top: 2px solid #ddd;
             color: #666;
             font-size: 0.9em;
         }
         
         @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 20px 10px;
+            }
+            
             h1 {
-                font-size: 1.5em;
+                font-size: 1.8em;
             }
             
             .viz-container iframe {
@@ -105,13 +145,21 @@
     <div class="container">
         <header>
             <h1>Space Debris Visualization Suite</h1>
-            <p class="subtitle">Visual Analytics 5122 - Design, Storytelling, and Communication</p>
-            <div class="meta">Gaurav Bharatkumar Patel | 801426641</div>
+            <p class="subtitle">Understanding Earth's Orbital Environment</p>
+            <div class="meta">Visual Analytics 5122 | Gaurav Bharatkumar Patel</div>
         </header>
+        
+        <div class="intro-section">
+            <h2>The Problem</h2>
+            <p>Space debris—from defunct satellites to collision fragments—grows each year. Traveling at thousands of miles per hour, small pieces can destroy active satellites, endanger missions and astronauts, and risk cascading collisions.</p>
+            
+            <h2 style="margin-top: 25px;">Our Goal</h2>
+            <p>Make this silent threat understandable and actionable through clear visuals. This project turns catalog data into an accessible narrative that summarizes accumulation, distribution, and trends in space debris.</p>
+        </div>
         
         <div class="viz-section">
             <div class="viz-title">1. Growth Timeline</div>
-            <div class="viz-description">Historical accumulation: From 1 satellite (1957) to 30,000+ objects today</div>
+            <div class="viz-description">Historical accumulation: From Sputnik (1957) to today. From 2 objects to 30,000+ in under 70 years.</div>
             <div class="viz-container">
                 <iframe src="content/growth_timeline.html"></iframe>
             </div>
@@ -119,7 +167,7 @@
         
         <div class="viz-section">
             <div class="viz-title">2. Orbit Regime Dominance</div>
-            <div class="viz-description">Ownership by altitude: CIS/US/China control different orbital zones</div>
+            <div class="viz-description">Ownership by altitude: Different altitudes have different risks, traffic patterns, and lifetimes. CIS/US/China control different orbital zones.</div>
             <div class="viz-container">
                 <iframe src="content/regime_dominance.html"></iframe>
             </div>
@@ -127,7 +175,7 @@
         
         <div class="viz-section">
             <div class="viz-title">3. Launches vs Decays</div>
-            <div class="viz-description">Ecosystem balance: Adding objects faster than they decay</div>
+            <div class="viz-description">Ecosystem balance: We're adding objects faster than they decay, increasing collision risk.</div>
             <div class="viz-container">
                 <iframe src="content/launches_decays_timeline.html"></iframe>
             </div>
@@ -135,7 +183,7 @@
         
         <div class="viz-section">
             <div class="viz-title">4. 3D Orbital Distribution</div>
-            <div class="viz-description">Spatial reality: Interactive 3D view of Earth's orbital shell</div>
+            <div class="viz-description">Spatial reality: Interactive 3D view of Earth's orbital shell showing density and structure.</div>
             <div class="viz-container">
                 <iframe src="content/orbit_3d_visualization_fixed.html"></iframe>
             </div>
@@ -143,7 +191,7 @@
         
         <div class="viz-section">
             <div class="viz-title">5. Public vs Private</div>
-            <div class="viz-description">Sector analysis: Growing private sector footprint across regimes</div>
+            <div class="viz-description">Sector analysis: Growing private sector footprint across orbital regimes.</div>
             <div class="viz-container">
                 <iframe src="content/public_private_stacked_bar.html"></iframe>
             </div>
@@ -151,7 +199,7 @@
         
         <div class="viz-section">
             <div class="viz-title">6. Altitude Pyramid</div>
-            <div class="viz-description">Population structure: Active vs decayed by altitude band</div>
+            <div class="viz-description">Population structure: Active vs decayed by altitude band showing altitude-specific patterns.</div>
             <div class="viz-container">
                 <iframe src="content/orbit_altitude_pyramid.html"></iframe>
             </div>
@@ -159,7 +207,7 @@
         
         <div class="viz-section">
             <div class="viz-title">7. Eccentricity Map</div>
-            <div class="viz-description">Orbital shapes: Perigee vs apogee reveals orbital diversity</div>
+            <div class="viz-description">Orbital shapes: Perigee vs apogee reveals orbital diversity affecting collision risk.</div>
             <div class="viz-container">
                 <iframe src="content/perigee_apogee_eccentricity.html"></iframe>
             </div>
@@ -167,7 +215,8 @@
         
         <footer>
             <p>Visual Analytics 5122 - Design, Storytelling, and Communication Mastery</p>
-            <p style="margin-top: 10px;">© 2025 Gaurav Bharatkumar Patel</p>
+            <p style="margin-top: 10px;">Making the invisible crisis visible through data visualization</p>
+            <p style="margin-top: 10px;">© 2025 Gaurav Bharatkumar Patel | 801426641</p>
         </footer>
     </div>
 </body>
